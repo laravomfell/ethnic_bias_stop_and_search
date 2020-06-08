@@ -53,7 +53,7 @@ p <- ggplot(counts_posterior,
   geom_hline(yintercept = 0, color = "grey35") +
   geom_point(shape = 21,
              fill = NA,
-             color = "#78909C", 
+             color = "#90A4AE", 
              size = .4,
              alpha = .5) +
   geom_point(data = med_counts, 

@@ -9,12 +9,6 @@
 
 # -----------------------------------------------------------------------------
 
-
-# In this file we gather the draws from the AR models
-# ar_models <- list.files("D:/", "^ar_r", full.names = T)
-# ar_results <- map(ar_models, readRDS)
-# names(ar_results) <- gsub("D:/ar_|.rds", "", ar_models)
-
 # gather AR coefficients
 ar_b <- map(ar_results, 
             function(x) gather_draws(x, b[j,i]))

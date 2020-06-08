@@ -54,8 +54,8 @@ bias_long <- melt(officer_level,
 bias_long[, type_lab := factor(type, 
                                levels = c("overall", "officer_bias", 
                                           "patrol", "aggr"),
-                               labels = c("Overall\nbias", "Officer\nbias", 
-                                          "Patrol\nratio", "Search\nratio"))]
+                               labels = c("Overall\nover-\nsearching", "Officer\nbias", 
+                                          "Over-\npatrolling", "Aggre-\ngation"))]
 
 # get median shares
 medians <- officer_level[, .(searches_share = searches_share[1],
@@ -93,7 +93,7 @@ medians[, y := 0.25]
 # the extra labeling
 medians <- rbind(medians, 
                  data.table(ethnic_group = c("Asian", "Black", "White"),
-                            x = 1, y = 0.31, value_print = "Median:"),
+                            x = 2, y = 0.31, value_print = "Median:"),
                  use.names = T, fill = T)
 
 p <- ggplot(bias_long, aes(type_lab, value)) + 

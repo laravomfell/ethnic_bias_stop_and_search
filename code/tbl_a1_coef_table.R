@@ -8,14 +8,36 @@
 # and obtained the posterior summaries of the coefficients
 
 # -----------------------------------------------------------------------------
-
 # coef_summarized gives the median and 90% intervals
 # then dcast by ethnicity
 coef_posterior[, ethnic_group := j_to_e(j)]
-coef_summarized <- coef_posterior[, median_qi(.value, 
-                                              .width = .9, 
-                                              .simple_names = T), 
-                                  by = .(plot_var, ethnic_group)]
+coef_summarized <- coef_posterior[, median_qi(.value,
+											  .width = .9, 
+											  .simple_names = T), 
+								  by = .(plot_var, ethnic_group)]
+
+
+
+# Team intercepts -----------------------------------------------------------------------
+
+# we want to include the team intercepts:
+
+team_sd <- gather_draws(m, s_alpha[j])
+team_sd <- median_qi(team_sd, .width = .9)
+setDT(team_sd)
+team_sd[, plot_var := "SD of team-specific intercept"]
+team_sd[, ethnic_group := j_to_e(j)]
+
+# pre-save the levels for faster reordering
+lvls <- levels(coef_summarized$plot_var)
+
+coef_summarized <- rbind(coef_summarized, team_sd, use.names = T, fill = T)
+coef_summarized[, plot_var := factor(plot_var, 
+									 levels = c("SD of team-specific intercept", 
+												lvls))]
+
+# put every into wide format
+	  
 
 coef_wide <- dcast(coef_summarized,
                    plot_var ~ ethnic_group, 
@@ -51,4 +73,4 @@ print(xtable::xtable(coef_wide,
                      caption = cap,
                      align = c("l", "l", rep("r", ncol(coef_wide) - 1))),
       include.rownames = FALSE,
-      file = "results/ugly_regression_table.tex")
+      file = "results/ugly_coef_table.tex")

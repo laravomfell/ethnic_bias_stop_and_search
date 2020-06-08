@@ -36,7 +36,8 @@ p <- map(vars, function(x){
     geom_hline(yintercept = 1,  color = "grey35") +
     # draw densities + intervals
     stat_halfeye(slab_fill = "#90A4AE", slab_color = NA, 
-                 .width = c(0.5, 0.9), fatten_point = 1.25) +
+                 .width = c(0.5, 0.9), fatten_point = 1.1, 
+				 normalize = "panels", scale = .8) +
     facet_wrap(~ ethnic_group, labeller = label_parsed) +
     scale_y_log10(minor_breaks = FALSE) +
     # breaks = c(0.5, 1, 1.5, 2, 3, 4),

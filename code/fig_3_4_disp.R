@@ -72,7 +72,7 @@ p <- ggplot(above1, aes(share1)) +
   geom_histogram(breaks = seq(0, 1, by = 0.05), fill = "#90A4AE") + 
   facet_grid(y_facet ~ x_facet, labeller = label_parsed, switch = "y") +
   scale_y_continuous(position = "right") +
-  labs(x = expression(Probability~mass~of~italic(D)~above~1), 
+  labs(x = "Posterior probability of over-searching", 
        y = "Number of officers\n")
 
 dsave("perc_biased.png", plot = p, height = 4, width = 5.5)

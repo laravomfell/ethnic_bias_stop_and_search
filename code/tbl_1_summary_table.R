@@ -50,30 +50,33 @@ time_cols <- c("stops_asian", "stops_black", "stops_white",
                "officer_age", "officer_age_std",
                "officer_service", "officer_service_std")
 
-tbl_time <- custom_skim(sem_data, all_of(time_cols)) %>%
-  as.data.table()
+tbl_time <- custom_skim(sem_data, all_of(time_cols)) %>%	
+  as.data.table()	
+	
+	
+	
+	
+# now the fixed data (gender etc)	
+	
+# drop everything that doesn't vary by time	
+fixed_data <- sem_data[, .(time = uniqueN(sem_year)), 	
+					   by = .(officer_id, officer_gender, 	
+							  officer_asian, officer_black)]	
+	
+fixed_cols <- c("officer_gender", "officer_asian", 	
+				"officer_black",	
+				"time")	
+	
+tbl_fixed <- custom_skim(fixed_data, all_of(fixed_cols)) %>%	
+  as.data.table()	
 
-# now the fixed data (gender etc)
-
-# drop everything that doesn't vary by time
-fixed_data <- sem_data[, .(time = uniqueN(sem_year)), 
-                       by = .(officer_id, officer_gender, 
-                              officer_asian, officer_black)]
-
-fixed_cols <- c("officer_gender", "officer_asian", 
-                "officer_black",
-                "time")
-
-tbl_fixed <- custom_skim(fixed_data, all_of(fixed_cols)) %>%
-  as.data.table()
-
-# we also want the team white share
-tbl_team <- custom_skim(team_share, "white_share") %>%
-  as.data.table()
-
-# combine all three results
-tbl <- rbind(tbl_time, tbl_fixed, tbl_team)
-# do some light rounding
+# we also want the team white share	
+tbl_team <- custom_skim(team_share, "white_share") %>%	
+  as.data.table()	
+	
+# combine all three results	
+tbl <- rbind(tbl_time, tbl_fixed, tbl_team)	
+# do some light rounding	
 tbl <- tbl[, -"skim_type"][, lapply(.SD, round, 2), by = skim_variable]
 
 # rename the variables
