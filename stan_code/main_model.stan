@@ -113,15 +113,15 @@ model {
   // weakly informative prior on zeta using England-wide data on shares of 
   // ethnicities in crime
   for (n in 1:N){
-    // dirichlet(1.25, .75, 5.1) corresponds to p = [0.17, 0.11, 0.72]
-    zeta[n] ~ dirichlet([1.25, 0.75, 5.1]');
+    // dirichlet(0.43, 0.61, 5.00) corresponds to p = [0.07, 0.10, 0.82]
+    zeta[n] ~ dirichlet([0.43, 0.61, 5.00]');
   }
   
   // weakly informative prior on eta using UK-wide data on 
   // population shares
   for (n in 1:N){
-    // dirichlet(1.1, 0.4, 12) corresponds to p = [0.08, 0.03, 0.89]
-    rho[n] ~ dirichlet([1.1, 0.4, 12]');
+    // dirichlet(0.39, 0.21, 5.00) corresponds to p = [0.07, 0.04, 0.89]
+    rho[n] ~ dirichlet([0.39, 0.21, 5.00]');
   }
   
   
